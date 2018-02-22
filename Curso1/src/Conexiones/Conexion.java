@@ -19,7 +19,7 @@ public class Conexion {
    public static Connection getConexion(){
     
     status=false;
-    String url="jdbc:sqlserver://LAPTOP-I5OMGKU0:1433;databaseName=curso1";
+    String url="jdbc:sqlserver://"AQUI TU USUARIO":1433;databaseName=curso1";
     try {
     
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
