@@ -1,0 +1,65 @@
+
+package Conexiones;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.sql.Statement;
+
+
+public class Conexion {
+ 
+    static Connection contacto=null;
+    public static String usuario;
+    public static String password;
+    public static boolean status=false;
+    
+   public static Connection getConexion(){
+    
+    status=false;
+    String url="jdbc:sqlserver://LAPTOP-I5OMGKU0:1433;databaseName=curso1";
+    try {
+    
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    
+    }catch (ClassNotFoundException e){
+    JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión ... revisar driver"
+            +e.getMessage(), "Error de Conexion",JOptionPane.ERROR_MESSAGE);
+    }
+    try{
+        //contacto=DriverManager.getConnection(url,"sa","123"); 
+        contacto=DriverManager.getConnection(url,Conexion.usuario,Conexion.password);
+        status=true;
+        
+    }catch (SQLException e){
+        JOptionPane.showMessageDialog(null, "Error"
+            +e.getMessage(), "Error de Conexion",JOptionPane.ERROR_MESSAGE);
+    }
+   return contacto; 
+  } 
+    
+public static void setcuenta(String usuario, String password){
+Conexion.usuario=usuario;
+Conexion.password=password;
+}
+
+public static boolean getstatus(){
+return status;
+}
+    
+  public static ResultSet Consulta(String consulta){
+    Connection con=getConexion();
+     Statement declara;
+        try{
+            declara=con.createStatement();
+            ResultSet respuesta=declara.executeQuery(consulta);
+            return respuesta;
+        }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, "Error"
+            +e.getMessage(), "Error de Conexion",JOptionPane.ERROR_MESSAGE);
+    }
+        return null;
+  }  
+}
